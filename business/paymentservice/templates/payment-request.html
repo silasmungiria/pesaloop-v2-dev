@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Request Notification - {{ app_name }}</title>
+  </head>
+
+  <body
+    style="
+      margin: 0;
+      padding: 20px;
+      background: #f1f5f9;
+      font-family: 'Poppins', sans-serif, Arial;
+      line-height: 1.6;
+      color: #0a2540;
+    "
+  >
+    <div
+      style="
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      "
+    >
+      <!-- Header -->
+      <div
+        style="
+          background: linear-gradient(135deg, #0a2540 0%, #006d77 100%);
+          color: white;
+          padding: 30px;
+          text-align: center;
+        "
+      >
+        <h1 style="font-size: 28px; font-weight: 700; margin: 0">
+          Payment Request Notification
+        </h1>
+        <h2 style="font-size: 20px; font-weight: 500; margin: 10px 0 0">
+          Hello, {{ recipient_name }}
+        </h2>
+      </div>
+
+      <div style="padding: 30px; color: #0a2540">
+        {% if is_requester %}
+        <p>
+          Your payment request to <strong> {{ counterparty_name }}</strong> has
+          been successfully sent.
+        </p>
+        <p>We’ll notify you as soon as they respond.</p>
+        {% else %}
+        <p>
+          You’ve received a payment request from
+          <strong> {{ counterparty_name }}</strong>.
+        </p>
+        <p>Please review the details below and take action when ready.</p>
+        {% endif %}
+
+        <div style="text-align: center; margin: 24px 0">
+          <div
+            style="
+              display: inline-block;
+              font-size: 26px;
+              font-weight: bold;
+              background-color: #f1f5f9;
+              color: #0a2540;
+              padding: 16px 28px;
+              border-radius: 10px;
+            "
+          >
+            {{ amount }}
+          </div>
+        </div>
+
+        <div
+          style="
+            margin-top: 30px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 20px;
+          "
+        >
+          <h3 style="font-size: 18px; margin-bottom: 10px">Request Details</h3>
+          <p style="margin: 4px 0">
+            <strong>Reference ID:</strong>
+            {{ request_id }}
+          </p>
+          {% if reason_message %}
+          <p style="margin: 4px 0">
+            <strong>Reason:</strong>
+            {{ reason_message }}
+          </p>
+          {% endif %}
+          <p style="margin: 4px 0">
+            <strong>Date & Time:</strong>
+            {{ date }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div
+        style="
+          background-color: #f9fafb;
+          padding: 25px;
+          text-align: center;
+          font-size: 14px;
+          color: #6b7280;
+          border-top: 1px solid #e5e7eb;
+        "
+      >
+        <p style="margin: 0 0 10px">
+          Need help?
+          <a
+            href="mailto:{{ email_support }}"
+            style="color: #005ab4; text-decoration: none"
+            >Contact our support team</a
+          >
+        </p>
+        <p style="margin: 0">
+          &copy; {{ copyright_year }} {{ app_name }}. All rights reserved.
+        </p>
+        <div style="font-size: 12px; margin-top: 10px">
+          <a
+            href="{{ privacy_policy_url }}"
+            style="color: #6b7280; text-decoration: none; margin: 0 5px"
+            >Privacy Policy</a
+          >
+          |
+          <a
+            href="{{ terms_url }}"
+            style="color: #6b7280; text-decoration: none; margin: 0 5px"
+            >Terms of Service</a
+          >
+        </div>
+
+        <p style="margin-top: 20px">
+          Thank you for being part of the {{ app_name }} community.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

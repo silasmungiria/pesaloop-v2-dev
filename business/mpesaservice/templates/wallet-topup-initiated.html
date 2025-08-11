@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STK Push Initiated – {{ app_name }}</title>
+  </head>
+
+  <body
+    style="
+      margin: 0;
+      padding: 20px;
+      background: #f1f5f9;
+      font-family: 'Poppins', sans-serif, Arial;
+      line-height: 1.6;
+      color: #0a2540;
+    "
+  >
+    <div
+      style="
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      "
+    >
+      <!-- Header -->
+      <div
+        style="
+          background: linear-gradient(135deg, #0a2540 0%, #006d77 100%);
+          color: white;
+          padding: 30px;
+          text-align: center;
+        "
+      >
+        <h1 style="font-size: 28px; font-weight: 700; margin: 0">
+          Top-Up Request Initiated
+        </h1>
+        <h2 style="font-size: 20px; font-weight: 500; margin: 10px 0 0">
+          Hello, {{ recipient_name }}
+        </h2>
+      </div>
+
+      <!-- Content -->
+      <div style="padding: 30px">
+        <p style="font-size: 16px; line-height: 1.6">
+          Your request to top up your wallet with
+          <strong>{{ amount }}</strong> has been initiated. A payment prompt
+          (STK Push) has been sent to your phone number
+          <strong>{{ phone_number }}</strong> via M-Pesa.
+        </p>
+        <p style="font-size: 16px; line-height: 1.6">
+          Please check your phone and authorize the transaction to complete the
+          process.
+        </p>
+
+        <div
+          style="
+            margin: 24px 0;
+            background-color: #eef2f7;
+            padding: 16px;
+            border-left: 4px solid #0a2540;
+            border-radius: 8px;
+            text-align: center;
+          "
+        >
+          <span style="font-size: 22px; font-weight: bold; color: #0a2540"
+            >{{ amount }}</span
+          >
+        </div>
+
+        <div style="margin-top: 24px">
+          <h3 style="font-size: 18px; margin-bottom: 10px">
+            Transaction Details
+          </h3>
+          <p><strong>Reference ID:</strong> {{ reference_id }}</p>
+          <p><strong>Wallet Balance:</strong> {{ account_balance }}</p>
+          <p><strong>Date:</strong> {{ payment_date }}</p>
+        </div>
+
+        <p style="margin-top: 24px; line-height: 1.6">
+          Didn’t receive the prompt? Please ensure your phone is connected to
+          the mobile network, or try again shortly.
+        </p>
+
+        <p style="margin-top: 24px">
+          Need help? Reach our support team at
+          <a
+            href="mailto:{{ reply_to_email }}"
+            style="color: #006d77; text-decoration: none"
+            >{{ reply_to_email }}</a
+          >.
+        </p>
+
+        <p style="margin-top: 30px">
+          Thanks for choosing <strong>{{ app_name }}</strong>!
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div
+        style="
+          background-color: #f9fafb;
+          padding: 25px;
+          text-align: center;
+          font-size: 14px;
+          color: #6b7280;
+          border-top: 1px solid #e5e7eb;
+        "
+      >
+        <p style="margin: 0 0 10px">
+          Need help?
+          <a
+            href="mailto:{{ email_support }}"
+            style="color: #005ab4; text-decoration: none"
+            >Contact our support team</a
+          >
+        </p>
+        <p style="margin: 0">
+          &copy; {{ copyright_year }} {{ app_name }}. All rights reserved.
+        </p>
+        <div style="font-size: 12px; margin-top: 10px">
+          <a
+            href="{{ privacy_policy_url }}"
+            style="color: #6b7280; text-decoration: none; margin: 0 5px"
+            >Privacy Policy</a
+          >
+          |
+          <a
+            href="{{ terms_url }}"
+            style="color: #6b7280; text-decoration: none; margin: 0 5px"
+            >Terms of Service</a
+          >
+        </div>
+
+        <p style="margin-top: 20px">
+          Thank you for being part of the {{ app_name }} community.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

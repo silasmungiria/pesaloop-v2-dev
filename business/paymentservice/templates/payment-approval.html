@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Request Approval - {{ app_name }}</title>
+  </head>
+
+  <body
+    style="
+      margin: 0;
+      padding: 20px;
+      background: #f1f5f9;
+      font-family: 'Poppins', sans-serif, Arial;
+      line-height: 1.6;
+      color: #0a2540;
+    "
+  >
+    <div
+      style="
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      "
+    >
+      <!-- Header -->
+      <div
+        style="
+          background: linear-gradient(135deg, #0a2540 0%, #006d77 100%);
+          color: white;
+          padding: 30px;
+          text-align: center;
+        "
+      >
+        <h1 style="font-size: 28px; font-weight: 700; margin: 0">
+          Payment Request Approved
+        </h1>
+        <h2 style="font-size: 20px; font-weight: 500; margin: 10px 0 0">
+          Hello, {{ recipient_name }}
+        </h2>
+      </div>
+
+      <div style="padding: 30px">
+        {% if is_requester %}
+        <p>
+          Your payment request has been approved by
+          <strong>{{ counterparty_name }}</strong>.
+        </p>
+        {% else %}
+        <p>
+          You’ve successfully approved a payment request from
+          <strong>{{ counterparty_name }}</strong>.
+        </p>
+        {% endif %}
+
+        <div style="text-align: center; margin: 24px 0">
+          <div
+            style="
+              display: inline-block;
+              font-size: 28px;
+              font-weight: bold;
+              background-color: #e0f7fa;
+              color: #1e3a8a;
+              padding: 16px 28px;
+              border-radius: 12px;
+            "
+          >
+            {{ amount }}
+          </div>
+        </div>
+
+        <div style="margin-top: 30px">
+          <h3 style="margin-bottom: 8px; font-size: 18px">Request Details</h3>
+          <p><strong>Request ID:</strong> {{ reference_id }}</p>
+          <p><strong>Approval Date:</strong> {{ payment_date }}</p>
+        </div>
+
+        {% if approval_message %}
+        <div
+          style="
+            margin-top: 20px;
+            padding: 15px 20px;
+            background-color: #f9fbfd;
+            border-left: 4px solid #3f51b5;
+            border-radius: 8px;
+          "
+        >
+          <p style="margin: 0">{{ approval_message }}</p>
+        </div>
+        {% endif %}
+
+        <p style="margin-top: 30px">
+          If you have any questions or need assistance, our support team is here
+          to help at
+          <a
+            href="mailto:{{ email_support }}"
+            style="color: #1e3a8a; text-decoration: none"
+            >{{ email_support }}</a
+          >.
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div
+        style="
+          background-color: #f9fafb;
+          padding: 25px;
+          text-align: center;
+          font-size: 14px;
+          color: #6b7280;
+          border-top: 1px solid #e5e7eb;
+        "
+      >
+        <p style="margin: 0 0 10px">
+          Need help?
+          <a
+            href="mailto:{{ email_support }}"
+            style="color: #005ab4; text-decoration: none"
+            >Contact our support team</a
+          >
+        </p>
+        <p style="margin: 0">
+          &copy; {{ copyright_year }} {{ app_name }}. All rights reserved.
+        </p>
+        <div style="font-size: 12px; margin-top: 10px">
+          <a
+            href="{{ privacy_policy_url }}"
+            style="color: #6b7280; text-decoration: none; margin: 0 5px"
+            >Privacy Policy</a
+          >
+          |
+          <a
+            href="{{ terms_url }}"
+            style="color: #6b7280; text-decoration: none; margin: 0 5px"
+            >Terms of Service</a
+          >
+        </div>
+
+        <p style="margin-top: 20px">
+          Thank you for being part of the {{ app_name }} community.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

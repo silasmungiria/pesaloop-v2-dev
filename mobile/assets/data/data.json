@@ -1,0 +1,20 @@
+{
+  "created_at": "2025-04-07T09:08:01.337000Z",
+  "face_image_url": "http://192.168.100.78:8000/api/media/customer/images/bbec9678-d6d6-47ab-b80b-bbdf6be42a78/face/",
+  "id": "bbec9678-d6d6-47ab-b80b-bbdf6be42a78",
+  "id_number": "12345678",
+  "id_type": "national_id",
+  "is_face_image_verified": false,
+  "is_face_uploaded": true,
+  "is_id_back_uploaded": true,
+  "is_id_back_verified": false,
+  "is_id_front_uploaded": true,
+  "is_id_front_verified": false,
+  "is_proof_of_address_uploaded": true,
+  "is_proof_of_address_verified": false,
+  "customer_verified": "False",
+  "remarks": null,
+  "updated_at": "2025-05-29T07:41:06.604342Z",
+  "verification_date": null,
+  "verification_status": null
+}

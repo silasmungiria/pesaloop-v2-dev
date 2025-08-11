@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currency Exchange - {{ app_name }}</title>
+  </head>
+
+  <body
+    style="
+      margin: 0;
+      padding: 20px;
+      background: #f1f5f9;
+      font-family: 'Poppins', sans-serif, Arial;
+      line-height: 1.6;
+      color: #0a2540;
+    "
+  >
+    <div
+      style="
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      "
+    >
+      <!-- Header -->
+      <div
+        style="
+          background: linear-gradient(135deg, #0a2540 0%, #006d77 100%);
+          color: white;
+          padding: 30px;
+          text-align: center;
+        "
+      >
+        <h1 style="font-size: 28px; font-weight: 700; margin: 0">
+          Currency Exchange Successful
+        </h1>
+        <h2 style="font-size: 20px; font-weight: 500; margin: 10px 0 0">
+          Hello, {{ user_full_name }}
+        </h2>
+      </div>
+
+      <!-- Main Content -->
+      <div style="padding: 30px">
+        <p style="font-size: 16px">
+          Your recent currency exchange transaction was completed successfully.
+          Below are the details:
+        </p>
+
+        <!-- Exchange Details Card -->
+        <div
+          style="
+            background-color: #f9fafb;
+            border-left: 4px solid #0a2540;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+          "
+        >
+          <p style="margin: 0 0 10px">
+            <strong>Exchange Rate:</strong> 1 {{ exchange.source_currency }} =
+            {{ exchange.platform_exchange_rate }} {{ exchange.target_currency }}
+          </p>
+          <p style="margin: 0 0 10px">
+            <strong>Conversion Amount:</strong>
+            {{ exchange.source_currency }} {{ exchange.source_amount }}
+          </p>
+          <p style="margin: 0 0 10px">
+            <strong>Charged Amount:</strong>
+            {{ exchange.source_currency }} {{ exchange.charged_amount }}
+          </p>
+          <p style="margin: 0 0 10px">
+            <strong>Converted Amount:</strong>
+            {{ exchange.target_currency }} {{ exchange.converted_amt }}
+          </p>
+          <p style="margin: 0">
+            <strong>Date:</strong>
+            {{ exchange.created_at }}
+          </p>
+        </div>
+
+        <p style="margin-top: 24px; font-size: 16px">
+          Thank you for using <strong> {{ app_name }}</strong>. We value your
+          trust.
+        </p>
+
+        <p style="margin-top: 24px; font-size: 16px">
+          For any questions or concerns, feel free to reach out to our support
+          team at
+          <a
+            href="mailto:{{ email_support }}"
+            style="color: #006d77; text-decoration: none"
+          >
+            {{ email_support }}</a
+          >.
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div
+        style="
+          background-color: #f9fafb;
+          padding: 25px;
+          text-align: center;
+          font-size: 14px;
+          color: #6b7280;
+          border-top: 1px solid #e5e7eb;
+        "
+      >
+        <p style="margin: 0 0 10px">
+          &copy; {{ copyright_year }} {{ app_name }}. All rights reserved.
+        </p>
+        <div style="font-size: 12px; margin-top: 10px">
+          <a
+            href="{{ privacy_policy_url }}"
+            style="color: #6b7280; text-decoration: none; margin: 0 5px"
+            >Privacy Policy</a
+          >
+          |
+          <a
+            href="{{ terms_url }}"
+            style="color: #6b7280; text-decoration: none; margin: 0 5px"
+            >Terms of Service</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

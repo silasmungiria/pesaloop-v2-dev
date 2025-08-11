@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Loan Approved</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+      }
+      .content {
+        padding: 20px;
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 0.8em;
+        color: #6c757d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>Loan Approval Notification</h2>
+      </div>
+      <div class="content">
+        <p>Hello {{ user.get_full_name }},</p>
+        <p>
+          Your loan request #{{ loan.reference_number }} for {{ loan.amount }}
+          has been approved.
+        </p>
+        <p>Loan Details:</p>
+        <ul>
+          <li>Amount: {{ loan.amount }}</li>
+          <li>Disbursement Date: {{ loan.disbursement_date }}</li>
+          <li>Due Date: {{ loan.due_date }}</li>
+          <li>Total Repayment: {{ loan.total_repayment }}</li>
+        </ul>
+        <p>Thank you for using {{ app_name }}!</p>
+      </div>
+      <div class="footer">
+        <p>
+          This is an automated message. Please do not reply directly to this
+          email.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
