@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False, unique=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('_balance', models.BinaryField(default=common.ZeroBalanceConfig.encrypted_balance)),
+                ('_balance', models.BinaryField(default=common.DefaultConfig.balance)),
                 ('is_default', models.BooleanField(default=False)),
                 ('is_active', models.BooleanField(default=True)),
                 ('last_updated', models.DateTimeField(auto_now=True)),

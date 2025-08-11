@@ -6,14 +6,11 @@ from django.db import models
 from django.conf import settings
 
 # Project-specific imports
-from data_encryption.services import EncryptionService
+from common import DefaultConfig, EncryptedFieldsMixin
 from userservice.models import User
 
 
-class Customer(models.Model):
-    def get_default_customer_verified():
-        return EncryptionService.encrypt(str(False))
-
+class Customer(EncryptedFieldsMixin, models.Model):
     # Core identification
     id = models.UUIDField( primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='customer_profile', null=False, blank=False)
@@ -48,7 +45,7 @@ class Customer(models.Model):
 
     # Verification status
     encrypted_verification_status = models.BinaryField(null=True, blank=True)
-    encrypted_customer_verified = models.BinaryField(default=get_default_customer_verified)
+    encrypted_customer_verified = models.BinaryField(default=DefaultConfig.unverified)
     encrypted_remarks = models.BinaryField(null=True, blank=True)
     verification_date = models.DateTimeField(null=True, blank=True)
     verified_by = models.ForeignKey(
@@ -74,10 +71,20 @@ class Customer(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Encrypted field names
-    _encrypted_fields = [
-        'id_type', 'id_number', 'country', 'region_state', 'city',
-        'postal_code', 'postal_address', 'residential_address', 'verification_status',
-        'remarks', 'customer_verified', 'next_of_kin_name', 'next_of_kin_relationship',
+    encrypted_fields = [
+        'id_type',
+        'id_number',
+        'country',
+        'region_state',
+        'city',
+        'postal_code',
+        'postal_address',
+        'residential_address',
+        'verification_status',
+        'remarks',
+        'customer_verified',
+        'next_of_kin_name',
+        'next_of_kin_relationship',
         'next_of_kin_contact'
     ]
 
@@ -90,18 +97,3 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"Customer {self.user.get_full_name()} - {self.id} ({self.verification_status})"
-
-    # Encryption utilities
-    def _get_encrypted_field(self, field_name):
-        value = getattr(self, f'encrypted_{field_name}')
-        return EncryptionService.decrypt(value) if value else None
-
-    def _set_encrypted_field(self, field_name, value):
-        setattr(self, f'encrypted_{field_name}', EncryptionService.encrypt(value))
-
-    # Dynamically create property accessors for encrypted fields
-    for field in _encrypted_fields:
-        locals()[field] = property(
-            lambda self, f=field: self._get_encrypted_field(f),
-            lambda self, value, f=field: self._set_encrypted_field(f, value)
-        )

@@ -1,20 +1,29 @@
+#  Standard Library Imports
 import uuid
+
+# Third-Party Imports
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
-from data_encryption.services import EncryptionService
+# Project-Specific Libraries
+from common import EncryptedFieldsMixin
 
 User = get_user_model()
 
 
-class OTP(models.Model):
+class OTP(EncryptedFieldsMixin, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='otps')
     encrypted_otp = models.BinaryField(null=True, blank=True)
     is_used = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
+
+    # Encrypted fields
+    encrypted_fields = [
+        'otp',
+    ]
 
     class Meta:
         db_table = 'otp'
@@ -24,14 +33,6 @@ class OTP(models.Model):
             models.Index(fields=['user', 'expires_at', 'is_used']),
         ]
         ordering = ['-expires_at']
-
-    @property
-    def otp(self):
-        return EncryptionService.decrypt(self.encrypted_otp)
-
-    @otp.setter
-    def otp(self, value):
-        self.encrypted_otp = EncryptionService.encrypt(value)
 
     def has_expired(self):
         return timezone.now() > self.expires_at

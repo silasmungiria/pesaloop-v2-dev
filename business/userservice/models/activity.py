@@ -5,11 +5,11 @@ import uuid
 from django.db import models
 
 # Project-specific imports
-from data_encryption.services import EncryptionService
 from .user import User
+from common import EncryptedFieldsMixin
 
 
-class ActivityTrail(models.Model):
+class ActivityTrail(EncryptedFieldsMixin, models.Model):
     # Core identification
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)

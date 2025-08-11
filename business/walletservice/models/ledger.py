@@ -4,41 +4,15 @@ from django.utils import timezone
 from decimal import Decimal
 import uuid
 
+from .wallet import DigitalWallet
+from common import EncryptedFieldsMixin
+
 User = get_user_model()
-
-# ----------------------------------------------------
-# DIGITAL WALLET (no direct balance storage)
-# ----------------------------------------------------
-class DigitalWallet(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="wallet")
-    created_at = models.DateTimeField(auto_now_add=True)
-    currency = models.CharField(max_length=3, default="KES")
-
-    class Meta:
-        verbose_name = "Digital Wallet"
-        verbose_name_plural = "Digital Wallets"
-
-    @property
-    def balance(self) -> Decimal:
-        """
-        Derived balance calculated from the LedgerEntry table.
-        """
-        credit_sum = self.ledger_entries.filter(entry_type=LedgerEntry.CREDIT).aggregate(
-            total=models.Sum("amount")
-        )["total"] or Decimal("0")
-        debit_sum = self.ledger_entries.filter(entry_type=LedgerEntry.DEBIT).aggregate(
-            total=models.Sum("amount")
-        )["total"] or Decimal("0")
-        return credit_sum - debit_sum
-
-    def __str__(self):
-        return f"Wallet[{self.user.username}] - {self.balance} {self.currency}"
-
 
 # ----------------------------------------------------
 # LEDGER ENTRY (Immutable, append-only)
 # ----------------------------------------------------
-class LedgerEntry(models.Model):
+class LedgerEntry(EncryptedFieldsMixin, models.Model):
     DEBIT = "DEBIT"
     CREDIT = "CREDIT"
     ENTRY_TYPE_CHOICES = [
@@ -47,14 +21,25 @@ class LedgerEntry(models.Model):
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    wallet = models.ForeignKey(DigitalWallet, on_delete=models.CASCADE, related_name="ledger_entries")
+    encrypted_wallet = models.ForeignKey(DigitalWallet, on_delete=models.PROTECT, related_name="ledger_entries")
     entry_type = models.CharField(max_length=6, choices=ENTRY_TYPE_CHOICES)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-    reference = models.CharField(max_length=64, db_index=True)
+    encrypted_amount = models.DecimalField(max_digits=12, decimal_places=2)
+    encrypted_reference = models.CharField(max_length=64, db_index=True)
+    encrypted_note = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    note = models.TextField(blank=True)
+
+    # Encrypted field names
+    encrypted_fields = [
+        "wallet",
+        "amount",
+        "reference",
+        "note",
+    ]
 
     class Meta:
+        db_table = 'ledger_entries'
+        verbose_name = 'Ledger Entry'
+        verbose_name_plural = 'Ledger Entries'
         indexes = [
             models.Index(fields=["wallet", "created_at"]),
             models.Index(fields=["reference"]),

@@ -8,8 +8,7 @@ from django.utils import timezone
 from .base import BaseModel
 from .currency import Currency
 from .ledger import LedgerEntry
-from common import ZeroBalanceConfig
-from data_encryption.services import EncryptionService
+from common import DefaultConfig, EncryptedFieldsMixin
 
 User = get_user_model()
 
@@ -17,13 +16,18 @@ User = get_user_model()
 # ----------------------------------------------------
 # DIGITAL WALLET (no direct balance storage)
 # ----------------------------------------------------
-class DigitalWallet(BaseModel):
+class DigitalWallet(EncryptedFieldsMixin, BaseModel):
     wallet_owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='digital_wallets')
-    encrypted_balance = models.BinaryField(default=ZeroBalanceConfig.encrypted_balance)
+    encrypted_balance = models.BinaryField(default=DefaultConfig.balance)
     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
     is_default = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     last_updated = models.DateTimeField(auto_now=True)
+
+    # Encrypted field names
+    encrypted_fields = [
+        "balance",
+    ]
 
     class Meta:
         db_table = 'wallet'
@@ -35,15 +39,18 @@ class DigitalWallet(BaseModel):
         ]
         ordering = ['-created_at']
 
-    # permission_basename = 'wallet'
-
-    # @property
-    # def balance(self):
-    #     return Decimal(EncryptionService.decrypt(self.encrypted_balance))
-
-    # @balance.setter
-    # def balance(self, value):
-    #     self.encrypted_balance = EncryptionService.encrypt(str(value))
+    @property
+    def balance(self) -> Decimal:
+        """
+        Derived balance calculated from the LedgerEntry table.
+        """
+        credit_sum = self.ledger_entries.filter(entry_type=LedgerEntry.CREDIT).aggregate(
+            total=models.Sum("amount")
+        )["total"] or Decimal("0")
+        debit_sum = self.ledger_entries.filter(entry_type=LedgerEntry.DEBIT).aggregate(
+            total=models.Sum("amount")
+        )["total"] or Decimal("0")
+        return credit_sum - debit_sum
 
     def save(self, *args, **kwargs):
         """
@@ -67,19 +74,6 @@ class DigitalWallet(BaseModel):
             self.is_active = True
 
         super().save(*args, **kwargs)
-
-    @property
-    def balance(self) -> Decimal:
-        """
-        Derived balance calculated from the LedgerEntry table.
-        """
-        credit_sum = self.ledger_entries.filter(entry_type=LedgerEntry.CREDIT).aggregate(
-            total=models.Sum("amount")
-        )["total"] or Decimal("0")
-        debit_sum = self.ledger_entries.filter(entry_type=LedgerEntry.DEBIT).aggregate(
-            total=models.Sum("amount")
-        )["total"] or Decimal("0")
-        return credit_sum - debit_sum
 
     def __str__(self):
         return f"Wallet: {self.wallet_owner.email} | Balance: {self.balance} {self.currency.code} | Default: {self.is_default} | Active: {self.is_active}"

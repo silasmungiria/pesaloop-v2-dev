@@ -8,12 +8,12 @@ from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
 # Project-specific imports
-from data_encryption.services import EncryptionService
-from userservice.services import AccountNumberGenerator
 from .user_manager import userManager
+from common import EncryptedFieldsMixin
+from userservice.services import AccountNumberGenerator
 
 
-class User(AbstractUser, PermissionsMixin):
+class User(AbstractUser, PermissionsMixin, EncryptedFieldsMixin):
     # Disable default username, group, and permission handling
     username = None
     groups = None
