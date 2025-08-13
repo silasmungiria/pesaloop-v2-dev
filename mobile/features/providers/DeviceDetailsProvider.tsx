@@ -1,14 +1,11 @@
 // DeviceDetailsContext.tsx
-import React, { createContext, useContext, ReactNode, useMemo } from "react";
-import { DeviceDetails, useDeviceDetails } from "@/features/hooks";
+import React, { createContext, ReactNode, useContext, useMemo } from "react";
+import { useDeviceDetails } from "@/features/hooks";
+import { DeviceContextProps } from "@/types";
 
-interface DeviceDetailsContextProps {
-  deviceDetails: DeviceDetails;
-}
-
-const DeviceDetailsContext = createContext<
-  DeviceDetailsContextProps | undefined
->(undefined);
+const DeviceDetailsContext = createContext<DeviceContextProps | undefined>(
+  undefined
+);
 
 export const DeviceDetailsProvider = ({
   children,
@@ -26,7 +23,7 @@ export const DeviceDetailsProvider = ({
   );
 };
 
-export const useDeviceContext = (): DeviceDetailsContextProps => {
+export const useDeviceContext = (): DeviceContextProps => {
   const context = useContext(DeviceDetailsContext);
   if (!context) {
     throw new Error(

@@ -168,14 +168,14 @@ export default function InternalRequest() {
 
       {/* Modals */}
       <RecipientLookupModal
-        isVisible={isRecipientModalVisible}
-        setIsVisible={setRecipientModalVisible}
-        setDetails={setRequestedUser}
+        visible={isRecipientModalVisible}
+        onClose={() => setRecipientModalVisible(false)}
+        setRequestedUser={setRequestedUser}
         setAmountModalVisible={setAmountModalVisible}
       />
       <AmountEntryModal
-        isVisible={isAmountModalVisible}
-        setIsVisible={setAmountModalVisible}
+        visible={isAmountModalVisible}
+        onClose={() => setAmountModalVisible(false)}
         setAmount={setAmount}
         setRecipientModalVisible={setRecipientModalVisible}
         exceedUserBalance={true}

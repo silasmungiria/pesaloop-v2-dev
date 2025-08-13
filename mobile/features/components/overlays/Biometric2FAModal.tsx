@@ -14,12 +14,13 @@ import { defaultColors } from "@/features/constants";
 import { use2FAVerification } from "@/features/hooks";
 import { useModalAnimation } from "@/features/lib";
 import { useBiometricStore } from "@/features/store";
+import { BaseModalProps as Props } from "@/types";
 
-interface Props {
-  visible: boolean;
-  onClose: () => void;
-  launchedFromSettings?: boolean;
-}
+// interface Props {
+//   visible: boolean;
+//   onClose: () => void;
+//   launchedFromSettings?: boolean;
+// }
 
 const Biometric2FAModal: React.FC<Props> = ({
   visible,

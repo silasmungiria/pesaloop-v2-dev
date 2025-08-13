@@ -19,13 +19,13 @@ import Animated, { FadeIn, FadeInDown, FadeOut } from "react-native-reanimated";
 
 import { submitCustomerProfile } from "@/features/api";
 import { useDeviceContext } from "@/features/providers";
-import { defaultColors } from "@/features/constants";
+import { appInfo, defaultColors } from "@/features/constants";
 import { useNotificationToast } from "@/features/providers";
 import { useUserStore } from "@/features/store";
 import { handleError } from "@/features/utils/handleError";
 
 // Environment variables
-const MIN_AGE = Number(process.env.MIN_AGE ?? 18);
+const MIN_AGE = Number(appInfo.MIN_AGE);
 
 interface Field {
   label: string;

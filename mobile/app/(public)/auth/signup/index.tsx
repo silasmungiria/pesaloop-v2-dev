@@ -171,8 +171,8 @@ export default function Signup() {
         </ScrollView>
 
         <PhoneCodePicker
-          isVisible={isCountryPickerVisible}
-          setIsVisible={setIsCountryPickerVisible}
+          visible={isCountryPickerVisible}
+          setVisible={setIsCountryPickerVisible}
           setCountryCode={setCountryCode}
         />
       </View>

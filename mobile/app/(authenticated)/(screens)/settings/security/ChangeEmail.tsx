@@ -50,10 +50,7 @@ export default function ChangeEmail({ onClose }: { onClose: () => void }) {
       resetForm();
       onClose();
     } catch (error: any) {
-      handleError(
-        error,
-        "Failed to update email. Please try again later."
-      );
+      handleError(error, "Failed to update email. Please try again later.");
 
       resetForm();
     } finally {

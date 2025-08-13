@@ -192,8 +192,8 @@ export default function Login() {
           </TouchableOpacity>
 
           <PhoneCodePicker
-            isVisible={isCountryPickerVisible}
-            setIsVisible={setIsCountryPickerVisible}
+            visible={isCountryPickerVisible}
+            setVisible={setIsCountryPickerVisible}
             setCountryCode={setCountryCode}
           />
         </ScrollView>

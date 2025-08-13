@@ -14,8 +14,21 @@ import { Link, Stack, router, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { Ionicons } from "@expo/vector-icons";
 
-import { defaultColors } from "@/features/constants";
+import { appInfo, apiConfig, defaultColors } from "@/features/constants";
 import { useUserStore, useSessionStore } from "@/features/store";
+
+console.info("App Name:", appInfo.APP_NAME);
+console.info("App Version:", appInfo.APP_VERSION);
+console.info("App Build Number:", appInfo.APP_BUILD_NUMBER);
+
+console.info("API Auth Header:", apiConfig.AUTH_HEADER);
+console.info("API Auth Scheme:", apiConfig.AUTH_SCHEME);
+console.info("API Base URL:", apiConfig.BASE_URL);
+console.info("API Retry Count:", apiConfig.RETRY);
+console.info("API Window Focus Refetch:", apiConfig.WIN_FOCUS_REFETCH);
+console.info("API Content Type:", apiConfig.CONTENT_TYPE);
+console.info("API Accept Type:", apiConfig.ACCEPT_TYPE);
+console.info("API Refresh Path:", apiConfig.REFRESH_PATH);
 
 SplashScreen.preventAutoHideAsync();
 
@@ -176,6 +189,29 @@ const AppNavigator = () => {
       />
       <Stack.Screen name="(authenticated)" />
     </Stack>
+
+    // <Stack
+    //   screenOptions={{
+    //     title: "",
+    //     headerBackTitle: "",
+    //     headerShown: false,
+    //     headerShadowVisible: false,
+    //     headerStyle: {
+    //       backgroundColor: scheme === "dark" ? "#111827" : "#F3F4F6",
+    //     },
+    //     headerTitleStyle: {
+    //       color: scheme === "dark" ? "#D1D5DB" : "#4B5563",
+    //       fontSize: 18,
+    //     },
+    //     headerTitleAlign: "center",
+    //     headerTintColor: scheme === "dark" ? "#D1D5DB" : "#4B5563",
+    //   }}
+    // >
+    //   <Stack.Screen name="index" />
+    //   {routes.map((r) => (
+    //     <Stack.Screen key={r.name} name={r.name} options={r} />
+    //   ))}
+    // </Stack>
   );
 };
 

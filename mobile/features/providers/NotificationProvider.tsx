@@ -1,19 +1,8 @@
 import React, { createContext, useContext, useState } from "react";
-// import Notification from '../components/Notification';
 import { ToastNotification } from "@/features/components";
+import { NotificationProps, NotificationType } from "@/types";
 
-type NotificationType = "error" | "success" | "info" | "warning";
-
-interface NotificationContextType {
-  showNotification: (
-    message: string,
-    type?: NotificationType,
-    duration?: number
-  ) => void;
-  hideNotification: () => void;
-}
-
-const NotificationContext = createContext<NotificationContextType | undefined>(
+const NotificationContext = createContext<NotificationProps | undefined>(
   undefined
 );
 
@@ -51,9 +40,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
       <ToastNotification
         message={notification.message}
-        // visible={notification.visible}
-        // Use default visibility for now.
-        visible={true}
+        visible={notification.visible}
         onDismiss={hideNotification}
         type={notification.type}
         duration={notification.duration}

@@ -6,26 +6,7 @@ import * as Battery from "expo-battery";
 import * as Network from "expo-network";
 import * as Location from "expo-location";
 
-export interface DeviceDetails {
-  brand: string;
-  model: string;
-  os: string;
-  osVersion: string;
-  deviceType: string;
-  deviceId: string;
-  memory: string;
-  batteryLevel: string;
-  batteryState: string;
-  ipAddress: string;
-  connectionType: string;
-  screenResolution: string;
-  region: string;
-  location: string;
-  city: string;
-  country: string;
-  defaultcurrency: string;
-  countryCallingCode: string;
-}
+import { DeviceDetails } from "@/types";
 
 const fetchCountryDetails = async (countryName: string): Promise<string> => {
   try {

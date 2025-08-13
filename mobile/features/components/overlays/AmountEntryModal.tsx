@@ -5,21 +5,14 @@ import * as Haptics from "expo-haptics";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Keypad } from "@/features/components";
+import { defaultColors } from "@/features/constants";
 import { formatCurrency, validateAmount } from "@/features/lib";
 import { useBalanceStore } from "@/features/store";
-import { defaultColors } from "@/features/constants";
-
-interface Props {
-  isVisible: boolean;
-  setIsVisible: (value: boolean) => void;
-  setAmount: (value: string) => void;
-  setRecipientModalVisible: (value: boolean) => void;
-  exceedUserBalance?: boolean;
-}
+import { AmountModalProps as Props } from "@/types";
 
 const AmountEntryModal = ({
-  isVisible,
-  setIsVisible,
+  visible,
+  onClose,
   setAmount,
   setRecipientModalVisible,
   exceedUserBalance = false,
@@ -45,16 +38,17 @@ const AmountEntryModal = ({
     }
 
     setAmount(amountInput);
-    setIsVisible(false);
+
+    onClose();
   };
 
   return (
     <Modal
       animationType="fade"
       transparent
-      visible={isVisible}
+      visible={visible}
       onRequestClose={() => {
-        setIsVisible(false);
+        onClose();
         setRecipientModalVisible(true);
       }}
     >
@@ -74,7 +68,7 @@ const AmountEntryModal = ({
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
-                setIsVisible(false);
+                onClose();
                 setRecipientModalVisible(true);
               }}
             >

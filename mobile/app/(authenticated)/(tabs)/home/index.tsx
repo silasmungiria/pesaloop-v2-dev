@@ -7,12 +7,9 @@ import Animated from "react-native-reanimated";
 
 import { fetchUserWallets } from "@/features/api";
 import { TransferRequestManager } from "@/features/components";
-import { defaultColors } from "@/features/constants";
+import { appInfo, defaultColors } from "@/features/constants";
 import { formatCurrency, useModalAnimation } from "@/features/lib";
 import { useBalanceStore } from "@/features/store";
-
-// Environment variables
-const APP_NAME = process.env.APP_NAME ?? "PesaLoop";
 
 export default function Home() {
   const { balance, currency, setBalance, setCurrency } = useBalanceStore();
@@ -188,7 +185,7 @@ export default function Home() {
               color={defaultColors.primary}
             />
             <Text className="ml-3 text-lg text-gray-800 dark:text-gray-300">
-              Send within {APP_NAME}
+              Send within {appInfo.APP_NAME}
             </Text>
           </TouchableOpacity>
 
@@ -208,7 +205,7 @@ export default function Home() {
               color={defaultColors.primary}
             />
             <Text className="ml-3 text-lg text-gray-800 dark:text-gray-300">
-              Send Outside {APP_NAME}
+              Send Outside {appInfo.APP_NAME}
             </Text>
           </TouchableOpacity>
         </Animated.View>
@@ -260,7 +257,7 @@ export default function Home() {
               color={defaultColors.primary}
             />
             <Text className="ml-3 text-lg text-gray-800 dark:text-gray-300">
-              Ask a {APP_NAME} Friend
+              Ask a {appInfo.APP_NAME} Friend
             </Text>
           </TouchableOpacity>
 
@@ -280,7 +277,7 @@ export default function Home() {
               color={defaultColors.primary}
             />
             <Text className="ml-3 text-lg text-gray-800 dark:text-gray-300">
-              Request Outside {APP_NAME}
+              Request Outside {appInfo.APP_NAME}
             </Text>
           </TouchableOpacity>
         </Animated.View>

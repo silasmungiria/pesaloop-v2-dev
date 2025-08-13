@@ -3,27 +3,27 @@ import { CountryPicker } from "react-native-country-codes-picker";
 import { useColorScheme } from "react-native";
 
 interface CountryPickerProps {
-  isVisible: boolean;
-  setIsVisible: (value: boolean) => void;
+  visible: boolean;
+  setVisible: (value: boolean) => void;
   setCountryCode: (code: string) => void;
 }
 
 const PhoneCodePicker = ({
-  isVisible,
-  setIsVisible,
+  visible,
+  setVisible,
   setCountryCode,
 }: CountryPickerProps) => {
   const scheme = useColorScheme();
 
   return (
     <CountryPicker
-      show={isVisible}
+      show={visible}
       lang="en"
       pickerButtonOnPress={(item) => {
         setCountryCode(item.dial_code);
-        setIsVisible(false);
+        setVisible(false);
       }}
-      onBackdropPress={() => setIsVisible(false)}
+      onBackdropPress={() => setVisible(false)}
       style={{
         backdrop: {
           backgroundColor: "rgba(0, 0, 0, 0.6)",

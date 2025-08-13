@@ -164,8 +164,8 @@ export default function MpesaComponent({ onClose }: { onClose: () => void }) {
             </AnimatedTouchable>
 
             <PhoneCodePicker
-              isVisible={isCountryPickerVisible}
-              setIsVisible={setIsCountryPickerVisible}
+              visible={isCountryPickerVisible}
+              setVisible={setIsCountryPickerVisible}
               setCountryCode={setSelectedCountryCode}
             />
           </>

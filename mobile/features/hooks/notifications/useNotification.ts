@@ -4,22 +4,8 @@ import { Platform } from "react-native";
 
 import { useSessionAppState } from "@/features/providers";
 import { useUserStore, useNotificationStore } from "@/features/store";
+import { PushNotificationContent, PushNotificationTrigger } from "@/types";
 
-interface NotificationContent {
-  title: string;
-  body: string;
-  sound?: boolean;
-  badge?: number;
-  vibrate?: number[];
-  data?: Record<string, any>;
-}
-
-interface NotificationTrigger {
-  seconds: number;
-  repeats: boolean;
-}
-
-// const useNotification = () => {
 export function useNotification() {
   const { setBackgroundSafe } = useSessionAppState();
   const { notificationsEnabled } = useNotificationStore();
@@ -67,8 +53,8 @@ export function useNotification() {
 
   // Function to schedule a dynamic notification
   const scheduleNotification = async (
-    content: NotificationContent,
-    trigger: NotificationTrigger
+    content: PushNotificationContent,
+    trigger: PushNotificationTrigger
   ) => {
     if (!notificationsEnabled) return;
 

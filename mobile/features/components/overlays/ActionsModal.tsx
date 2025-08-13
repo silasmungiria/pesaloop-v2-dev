@@ -4,25 +4,17 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { defaultColors } from "@/features/constants";
 import { useLogoutCleanup, useUserStore } from "@/features/store";
+import { ActionModalProps, ActionItemProps } from "@/types";
 
-type ActionItem = {
-  label: string;
-  route: string;
-  icon: string;
-  iconColor: string;
-};
-
-type Props = {
-  visible: boolean;
-  onClose: () => void;
-  onActionSelect: (route: string) => void;
-};
-
-const ActionsModal = ({ visible, onClose, onActionSelect }: Props) => {
+const ActionsModal = ({
+  visible,
+  onClose,
+  onActionSelect,
+}: ActionModalProps) => {
   const { performFullLogout } = useLogoutCleanup();
   const { user } = useUserStore();
 
-  const actions: ActionItem[] = [
+  const actions: ActionItemProps[] = [
     {
       label: "Send to a Friend",
       route: "/(authenticated)/(screens)/transactions/send/InternalTransfer",
@@ -83,7 +75,7 @@ const ActionsModal = ({ visible, onClose, onActionSelect }: Props) => {
     (item) => item.label !== "My Credit Hub" || user?.is_loan_qualified
   );
 
-  const renderItem = ({ item }: { item: ActionItem }) => (
+  const renderItem = ({ item }: { item: ActionItemProps }) => (
     <TouchableOpacity
       activeOpacity={0.8}
       className="py-3 border-b border-gray-200 dark:border-gray-800"

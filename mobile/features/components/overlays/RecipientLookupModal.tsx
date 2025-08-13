@@ -26,18 +26,19 @@ import {
 import { ContactProp, useFrequentContactsStore } from "@/features/store";
 import { VerifyRecipientResponse } from "@/types";
 import { handleError } from "@/features/utils/handleError";
+import { RecipientModalProps as Props } from "@/types";
 
-interface Props {
-  isVisible: boolean;
-  setIsVisible: (value: boolean) => void;
-  setDetails: (data: VerifyRecipientResponse) => void;
-  setAmountModalVisible: (value: boolean) => void;
-}
+// interface Props {
+//   visible: boolean;
+//   setVisible: (value: boolean) => void;
+//   setRequestedUser: (data: VerifyRecipientResponse) => void;
+//   setAmountModalVisible: (value: boolean) => void;
+// }
 
 const RecipientLookupModal = ({
-  isVisible,
-  setIsVisible,
-  setDetails,
+  visible,
+  onClose,
+  setRequestedUser,
   setAmountModalVisible,
 }: Props) => {
   const { deviceDetails } = useDeviceContext();
@@ -157,9 +158,9 @@ const RecipientLookupModal = ({
         }));
       }
 
-      setDetails(responseData);
+      setRequestedUser(responseData);
       setAmountModalVisible(true);
-      setIsVisible(false);
+      onClose();
     } catch (error) {
       handleError(
         error,
@@ -181,7 +182,7 @@ const RecipientLookupModal = ({
     <Modal
       animationType="fade"
       transparent
-      visible={isVisible}
+      visible={visible}
       onRequestClose={router.back}
     >
       <View className="flex-1 w-full p-4 bg-gray-100 dark:bg-gray-900">
@@ -342,8 +343,8 @@ const RecipientLookupModal = ({
 
         {/* Use the reusable CountryPicker component */}
         <PhoneCodePicker
-          isVisible={isCountryPickerVisible}
-          setIsVisible={setIsCountryPickerVisible}
+          visible={isCountryPickerVisible}
+          setVisible={setIsCountryPickerVisible}
           setCountryCode={setCountryCode}
         />
       </View>

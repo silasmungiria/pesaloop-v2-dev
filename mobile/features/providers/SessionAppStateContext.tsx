@@ -7,23 +7,15 @@ import React, {
 } from "react";
 import { AppState, AppStateStatus } from "react-native";
 import { useLogoutCleanup } from "@/features/store";
-
-// Define the context type
-interface SessionAppStateContext {
-  appState: AppStateStatus;
-  isBackgroundSafe: boolean;
-  setBackgroundSafe: (isBackgroundSafe: boolean) => void;
-}
+import {
+  SessionAppStateContextProps,
+  SessionAppStateProviderProps,
+} from "@/types";
 
 // Create the context with an initial undefined value
 const SessionAppStateContext = createContext<
-  SessionAppStateContext | undefined
+  SessionAppStateContextProps | undefined
 >(undefined);
-
-// Define the provider component
-interface SessionAppStateProviderProps {
-  children: ReactNode;
-}
 
 export const SessionAppStateProvider: React.FC<
   SessionAppStateProviderProps
@@ -75,7 +67,7 @@ export const SessionAppStateProvider: React.FC<
 };
 
 // Create a custom hook to use the SessionAppStateContext
-export const useSessionAppState = (): SessionAppStateContext => {
+export const useSessionAppState = (): SessionAppStateContextProps => {
   const context = useContext(SessionAppStateContext);
   if (!context) {
     throw new Error(

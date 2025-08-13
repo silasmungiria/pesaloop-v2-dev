@@ -1,33 +1,15 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { QueryClient } from "@tanstack/react-query";
+
+import { apiConfig } from "@/features/constants";
 import { useSessionStore, useLogoutCleanup } from "@/features/store";
-
-// Environment variables with fallbacks
-const API_BASE_URL = process.env.API_BASE_URL ?? "https://api.pesaloop.com";
-const API_RETRY = Number(process.env.API_RETRY ?? 3);
-const API_WIN_FOCUS_REFETCH = process.env.API_WIN_FOCUS_REFETCH === "true";
-const API_CONTENT_TYPE = process.env.API_CONTENT_TYPE ?? "application/json";
-const API_ACCEPT_TYPE = process.env.API_ACCEPT_TYPE ?? "application/json";
-const API_REFRESH_PATH = process.env.API_REFRESH_PATH ?? "/auth/refresh/";
-const API_AUTH_KEY = process.env.API_AUTH_KEY ?? "Authorization";
-
-interface ApiResponse<T> {
-  success: boolean;
-  data: T;
-  message?: string;
-}
-
-interface ApiError {
-  message?: string;
-  error?: string;
-  [key: string]: unknown;
-}
+import { ApiResponse, ApiError } from "@/types";
 
 const axiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: apiConfig.BASE_URL,
   headers: {
-    "Content-Type": API_CONTENT_TYPE,
-    Accept: API_ACCEPT_TYPE,
+    "Content-Type": apiConfig.CONTENT_TYPE,
+    Accept: apiConfig.ACCEPT_TYPE,
   },
 });
 
@@ -35,10 +17,10 @@ const axiosInstance = axios.create({
 export const setAuthorizationHeader = (accessToken: string | null): void => {
   if (accessToken) {
     axiosInstance.defaults.headers.common[
-      API_AUTH_KEY
-    ] = `Bearer ${accessToken}`;
+      apiConfig.AUTH_HEADER
+    ] = `${apiConfig.AUTH_SCHEME} ${accessToken}`;
   } else {
-    delete axiosInstance.defaults.headers.common[API_AUTH_KEY];
+    delete axiosInstance.defaults.headers.common[apiConfig.AUTH_HEADER];
   }
 };
 
@@ -64,7 +46,7 @@ const refreshAccessToken = async (): Promise<string> => {
 
   try {
     const response = await axios.post<{ access: string; refresh: string }>(
-      `${API_BASE_URL}${API_REFRESH_PATH}`,
+      `${apiConfig.BASE_URL}${apiConfig.REFRESH_PATH}`,
       { refresh: refreshToken }
     );
 
@@ -111,7 +93,9 @@ axiosInstance.interceptors.response.use(
         try {
           const newToken = await refreshAccessToken();
           if (originalRequest.headers) {
-            originalRequest.headers[API_AUTH_KEY] = `Bearer ${newToken}`;
+            originalRequest.headers[
+              apiConfig.AUTH_HEADER
+            ] = `${apiConfig.AUTH_SCHEME} ${newToken}`;
           }
           return axiosInstance(originalRequest);
         } catch (refreshError) {
@@ -122,7 +106,9 @@ axiosInstance.interceptors.response.use(
       return new Promise((resolve) => {
         refreshSubscribers.push((token: string) => {
           if (originalRequest.headers) {
-            originalRequest.headers[API_AUTH_KEY] = `Bearer ${token}`;
+            originalRequest.headers[
+              apiConfig.AUTH_HEADER
+            ] = `${apiConfig.AUTH_SCHEME} ${token}`;
           }
           resolve(axiosInstance(originalRequest));
         });
@@ -176,8 +162,8 @@ export const apiRequest = async <T>(
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: API_RETRY,
-      refetchOnWindowFocus: API_WIN_FOCUS_REFETCH,
+      retry: Number(apiConfig.RETRY),
+      refetchOnWindowFocus: apiConfig.WIN_FOCUS_REFETCH,
     },
   },
 });

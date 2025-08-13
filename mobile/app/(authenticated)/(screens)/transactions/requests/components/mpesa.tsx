@@ -228,8 +228,8 @@ export default function MpesaComponent({ onClose }: { onClose: () => void }) {
               </View>
 
               <PhoneCodePicker
-                isVisible={countryPicker}
-                setIsVisible={setCountryPicker}
+                visible={countryPicker}
+                setVisible={setCountryPicker}
                 setCountryCode={setCountryCode}
               />
             </>

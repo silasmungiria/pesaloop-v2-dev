@@ -17,15 +17,12 @@ import {
   activateWallet,
 } from "@/features/api";
 import { WalletOverviewModal } from "@/features/components";
-import { defaultColors } from "@/features/constants";
+import { appInfo, defaultColors } from "@/features/constants";
 import { formatCurrency } from "@/features/lib";
 import { useNotificationToast } from "@/features/providers";
 import { useBalanceStore } from "@/features/store";
 import { WalletResponse } from "@/types";
 import { handleError } from "@/features/utils/handleError";
-
-// Environment variables
-const APP_NAME = process.env.APP_NAME ?? "PesaLoop";
 
 type Wallet = WalletResponse["results"][0];
 
@@ -149,7 +146,7 @@ export default function Wallets() {
         </View>
         <View className="absolute top-6 right-10">
           <Text className="font-medium italic text-sm sm:text-xl text-indigo-500 dark:text-indigo-400">
-            {APP_NAME}
+            {appInfo.APP_NAME}
           </Text>
         </View>
 

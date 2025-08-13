@@ -4,13 +4,12 @@ import Animated from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 
 import { useModalAnimation } from "@/features/lib";
+import { BaseModalProps } from "@/types";
 
-interface Props {
-  visible: boolean;
-  onClose: () => void;
-}
-
-const AccountDeletionModal: React.FC<Props> = ({ visible, onClose }) => {
+const AccountDeletionModal: React.FC<BaseModalProps> = ({
+  visible,
+  onClose,
+}) => {
   const onDelete = () => {
     onClose();
     console.info("Deleted account");

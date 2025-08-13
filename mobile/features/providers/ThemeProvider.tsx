@@ -12,7 +12,7 @@ import { secureStorage } from "@/features/store";
 
 const THEME_KEY = "app-theme";
 
-type ThemeStore = {
+interface ThemeStore {
   darkModeEnabled: boolean;
   theme: typeof DefaultTheme | typeof DarkTheme;
   originalSystemTheme: "light" | "dark" | null;
@@ -20,7 +20,7 @@ type ThemeStore = {
   setTheme: (value: typeof DefaultTheme | typeof DarkTheme) => void;
   setOriginalSystemTheme: (value: "light" | "dark" | null) => void;
   toggleTheme: () => Promise<void>;
-};
+}
 
 export const useThemeStore = create<ThemeStore>()(
   persist(

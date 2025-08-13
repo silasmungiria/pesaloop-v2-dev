@@ -159,14 +159,14 @@ export default function InternalTransfer() {
 
       {/* Modals */}
       <RecipientLookupModal
-        isVisible={showRecipientModal}
-        setIsVisible={setShowRecipientModal}
+        visible={showRecipientModal}
+        setVisible={setShowRecipientModal}
         setDetails={setRecipient}
         setAmountModalVisible={setShowAmountModal}
       />
       <AmountEntryModal
-        isVisible={showAmountModal}
-        setIsVisible={setShowAmountModal}
+        visible={showAmountModal}
+        setVisible={setShowAmountModal}
         setAmount={setAmount}
         setRecipientModalVisible={setShowRecipientModal}
         exceedUserBalance={false}
