@@ -61,18 +61,20 @@ class CustomerProfileFormatter:
         """
         Customer = cls._get_customer_model()
         return Customer.objects.select_related('user').defer(
-            '_id_type',
-            '_id_number',
-            '_country',
-            '_region_state',
-            '_city',
-            '_postal_code',
-            '_postal_address',
-            '_residential_address',
-            '_next_of_kin_name',
-            '_next_of_kin_relationship',
-            '_next_of_kin_contact',
-            '_verification_status',
-            '_customer_verified',
-            '_remarks'
+            'encrypted_id_type',
+            'encrypted_id_number',
+            'encrypted_country',
+            'encrypted_region_state',
+            'encrypted_city',
+            'encrypted_postal_code',
+            'encrypted_postal_address',
+            'encrypted_residential_address',
+
+            'encrypted_next_of_kin_name',
+            'encrypted_next_of_kin_relationship',
+            'encrypted_next_of_kin_contact',
+
+            'encrypted_customer_verified',
+            'encrypted_verification_status',
+            'encrypted_remarks'
         )
