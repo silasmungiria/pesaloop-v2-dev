@@ -7,7 +7,6 @@ from django.utils import timezone
 
 from .base import BaseModel
 from .currency import Currency
-from .ledger import LedgerEntry
 from common import DefaultConfig, EncryptedFieldsMixin
 
 User = get_user_model()
@@ -40,10 +39,12 @@ class DigitalWallet(EncryptedFieldsMixin, BaseModel):
         ordering = ['-created_at']
 
     @property
-    def balance(self) -> Decimal:
+    def ledger_balance(self) -> Decimal:
         """
         Derived balance calculated from the LedgerEntry table.
         """
+        from .ledger import LedgerEntry
+
         credit_sum = self.ledger_entries.filter(entry_type=LedgerEntry.CREDIT).aggregate(
             total=models.Sum("amount")
         )["total"] or Decimal("0")

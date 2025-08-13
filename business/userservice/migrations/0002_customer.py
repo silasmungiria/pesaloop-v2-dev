@@ -5,6 +5,7 @@ import userservice.models.customer.customer
 import uuid
 from django.conf import settings
 from django.db import migrations, models
+from common import DefaultConfig
 
 
 class Migration(migrations.Migration):
@@ -41,7 +42,7 @@ class Migration(migrations.Migration):
                 ('_next_of_kin_relationship', models.BinaryField(blank=True, null=True)),
                 ('_next_of_kin_contact', models.BinaryField(blank=True, null=True)),
                 ('_verification_status', models.BinaryField(blank=True, null=True)),
-                ('_customer_verified', models.BinaryField(default=userservice.models.customer.customer.Customer.get_default_customer_verified)),
+                ('_customer_verified', models.BinaryField(default=DefaultConfig.unverified)),
                 ('_remarks', models.BinaryField(blank=True, null=True)),
                 ('verification_date', models.DateTimeField(blank=True, null=True)),
                 ('rejection_reason', models.TextField(blank=True, null=True)),
